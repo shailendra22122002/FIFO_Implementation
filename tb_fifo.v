@@ -33,10 +33,10 @@ module tb_fifo();
     );
 
     // Clock generation
-    always #5 clk = ~clk;  // 10 time unit clock period
+    always #5 clk = ~clk;  
 
     initial begin
-        // Initialize signals
+        
         clk = 0;
         rst_n = 0;
         wr_en = 0;
@@ -44,14 +44,14 @@ module tb_fifo();
         din = 0;
 
         // Reset the FIFO
-        #10 rst_n = 1;  // Release reset after 10 time units
+        #10 rst_n = 1;  
 
         // Write data into the FIFO
         #10;
         wr_en = 1;
-        for (i = 0; i < DEPTH; i = i + 1) begin  // Loop to write data
-            din = i;  // Load data
-            #10;      // Wait for one clock cycle
+        for (i = 0; i < DEPTH; i = i + 1) begin  
+            din = i;  
+            #10;      
         end
         wr_en = 0;
 
@@ -60,17 +60,15 @@ module tb_fifo();
 
         // Read data from the FIFO
         rd_en = 1;
-        for (j = 0; j < DEPTH; j = j + 1) begin  // Loop to read data
-            #10;  // Wait for one clock cycle to read each value
+        for (j = 0; j < DEPTH; j = j + 1) begin  
+            #10;  
         end
         rd_en = 0;
 
-        // Finish the simulation
         #50;
         $finish;
     end
 
-    // Monitor for debugging
     initial begin
         $monitor("Time: %0t | wr_en = %b | rd_en = %b | din = %0d | dout = %0d | full = %b | empty = %b", 
                  $time, wr_en, rd_en, din, dout, full, empty);
