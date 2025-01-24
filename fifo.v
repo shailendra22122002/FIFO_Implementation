@@ -4,18 +4,18 @@ module fifo #(
     parameter PTR_SIZE = 5
 )(
     input wire clk,
-    input wire rst_n,        // Active low reset
-    input wire wr_en,        // Write enable
-    input wire rd_en,        // Read enable
-    input wire [DATA_WIDTH-1:0] din,  // Data input
-    output reg [DATA_WIDTH-1:0] dout, // Data output
-    output reg full,         // FIFO full flag
-    output reg empty         // FIFO empty flag
+    input wire rst_n,        
+    input wire wr_en,        
+    input wire rd_en,        
+    input wire [DATA_WIDTH-1:0] din,  
+    output reg [DATA_WIDTH-1:0] dout, 
+    output reg full,         
+    output reg empty        
 );
 
-    reg [DATA_WIDTH-1:0] mem [0:DEPTH-1]; // Memory array for FIFO
-    reg [PTR_SIZE-1:0] wr_ptr, rd_ptr;    // Write and read pointers
-    reg [PTR_SIZE:0] fifo_count;          // Tracks the number of items in the FIFO
+    reg [DATA_WIDTH-1:0] mem [0:DEPTH-1]; 
+    reg [PTR_SIZE-1:0] wr_ptr, rd_ptr;    
+    reg [PTR_SIZE:0] fifo_count;         
 
     // Write Operation
     always @(posedge clk or negedge rst_n) begin
@@ -44,9 +44,9 @@ module fifo #(
             fifo_count <= 0;
         end else begin
             case ({wr_en, rd_en})
-                2'b10: fifo_count <= fifo_count + 1;  // Write
-                2'b01: fifo_count <= fifo_count - 1;  // Read
-                default: fifo_count <= fifo_count;    // No change
+                2'b10: fifo_count <= fifo_count + 1;  
+                2'b01: fifo_count <= fifo_count - 1;  
+                default: fifo_count <= fifo_count;    
             endcase
         end
     end
